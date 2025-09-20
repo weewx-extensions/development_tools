@@ -93,7 +93,7 @@ jobs:
       if: ${{inputs.function-test}}
       run: |
         export PYTHONPATH=bin:$PYTHONPATH
-        #pytest bin/user/tests/func --html=results/functests.html --self-contained-html
+        pytest bin/user/tests/func --html=results/functests.html --self-contained-html
            
     - name: Code Coverage
     # Only run code coverage once, against the latest python version and weewx version
