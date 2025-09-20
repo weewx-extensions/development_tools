@@ -6,7 +6,15 @@ on:
       module-name:
         required: true
         type: string
-        description: 'The module to process.'
+        description: 'The module to process.',
+        unit-test:
+          required: false
+          type: boolean
+          default: false,
+        function-test:
+          required: false
+          type: boolean
+          default: false
     secrets:
       CODECOV_TOKEN:
         required: true
