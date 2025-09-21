@@ -1,2 +1,3 @@
 *.pyc
 act-artifacts/
+.coverage
