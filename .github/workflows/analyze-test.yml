@@ -79,7 +79,7 @@ jobs:
         fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-        if [ ${PIP_LIST} != '']; then python -m pip install ${PIP_LIST}
+        if [ ${PIP_LIST} != '']; then python -m pip install ${PIP_LIST}; fi
         sudo apt-get -qq --assume-yes install mosquitto
 
 
