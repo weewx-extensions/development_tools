@@ -7,6 +7,11 @@ on:
         required: true
         type: string
         description: 'The module to process.'
+      PIP_LIST:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional pip packages to be installed.'
       lint:
         required: false
         type: boolean
@@ -74,7 +79,7 @@ jobs:
         fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-        python -m pip install paho-mqtt
+        if [ ${PIP_LIST} != '']; then python -m pip install ${PIP_LIST}
         sudo apt-get -qq --assume-yes install mosquitto
 
 
