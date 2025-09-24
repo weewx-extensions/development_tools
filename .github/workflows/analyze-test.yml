@@ -7,7 +7,7 @@ on:
         required: true
         type: string
         description: 'The module to process.'
-      PIP_LIST:
+      pip-list:
         required: false
         type: string
         default: ''
@@ -72,6 +72,7 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
         WEEWX_VERSION=${{matrix.weewx-version}}
+        PIP_LIST=${{inputs.pip-list}}
         if [ ${WEEWX_VERSION:0:6} == 'branch' ]; then
           pip install git+https://github.com/weewx/weewx.git@${WEEWX_VERSION:7}
         else
