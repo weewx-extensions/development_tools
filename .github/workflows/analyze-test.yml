@@ -85,7 +85,9 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
         echo "RMB01: >${{inputs.pip-list}}<"
-        #if [ "${{inputs.pip-list}}" != "" ]; then python -m pip install ${{inputs.pip-list}}; fi
+        if [ "${{inputs.pip-list}}" != "" ]; then 
+          python -m pip install ${{inputs.pip-list}}; 
+        fi
         echo "RMB02:"
 
         #sudo apt-get update
