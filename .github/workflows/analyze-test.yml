@@ -72,7 +72,6 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
         WEEWX_VERSION=${{matrix.weewx-version}}
-        PIP_LIST=${{inputs.pip-list}}
         if [ ${WEEWX_VERSION:0:6} == 'branch' ]; then
           pip install git+https://github.com/weewx/weewx.git@${WEEWX_VERSION:7}
         else
@@ -83,7 +82,7 @@ jobs:
         echo "RMB01: ${{inputs.pip-list}}"
         if [ "${{inputs.pip-list}}" != "" ]; then 
           echo "RMB02"
-          #python -m pip install ${{inputs.pip-list}}; 
+          python -m pip install ${{inputs.pip-list}}; 
         fi
         sudo apt-get -qq --assume-yes install mosquitto
 
