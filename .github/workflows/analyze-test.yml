@@ -80,7 +80,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
         echo "RMB01: ${PIP_LIST}"
-        if [ "${PIP_LIST}"" != ""]; then python -m pip install ${PIP_LIST}; fi
+        if [ "${PIP_LIST}"" != ""]; then 
+          echo "RMB02"
+          python -m pip install ${PIP_LIST}; 
+        fi
         sudo apt-get -qq --assume-yes install mosquitto
 
 
