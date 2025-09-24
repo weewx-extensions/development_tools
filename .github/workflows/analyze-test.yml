@@ -12,6 +12,11 @@ on:
         type: string
         default: ''
         description: 'Additional pip packages to be installed.'
+      package-list:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional OS packages to be installed.'
       lint:
         required: false
         type: boolean
@@ -79,13 +84,9 @@ jobs:
         fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-        echo "RMB01: ${{inputs.pip-list}}"
-        if [ "${{inputs.pip-list}}" != "" ]; then 
-          echo "RMB02"
-          python -m pip install ${{inputs.pip-list}}; 
-        fi
-        sudo apt-get -qq --assume-yes install mosquitto
+        if [ "${{inputs.pip-list}}" != "" ]; then python -m pip install ${{inputs.pip-list}}; fi
 
+        if [ "${{inputs.package-list}}" != "" ]; then sudo apt-get -qq --assume-yes install ${{inputs.package-list}}; fi
 
     - name: Lint with flake8
       if: ${{inputs.lint}}
