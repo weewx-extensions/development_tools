@@ -2,9 +2,7 @@ name: Test the analyze and test workflow
 
 on:
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches-ignore: [ "master" ]
 
 jobs:
   analyze-test:

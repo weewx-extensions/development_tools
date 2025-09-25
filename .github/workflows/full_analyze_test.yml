@@ -1,0 +1,77 @@
+name: Matrix Test the analyze and test workflow
+
+on:
+  workflow_call:
+    inputs:
+      module-name:
+        required: true
+        type: string
+        description: 'The module to process.'
+      pip-list:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional pip packages to be installed.'
+      package-list:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional OS packages to be installed.'
+      lint:
+        required: false
+        type: boolean
+        default: true
+      unit-test:
+        required: false
+        type: boolean
+        default: true
+      function-test:
+        required: false
+        type: boolean
+        default: true
+      integration-test:
+        required: false
+        type: boolean
+        default: true
+      code-coverage:
+        required: false
+        type: boolean
+        default: true
+      coveralls-upload:
+        required: false
+        type: boolean
+        default: true
+      codecov-upload:
+        required: false
+        type: boolean
+        default: true
+      sonar-scan:
+        required: false
+        type: boolean
+        default: true
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+      SONAR_TOKEN:
+        required: true
+
+jobs:
+  build:
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
+        weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
+
+    uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@master
+    with:
+      module-name: 'simpleclass'
+      pip-list: 'paho-mqtt'
+      package-list: 'mosquitto'
+      coveralls-upload: false
+      codecov-upload: false
+      sonar-scan: false
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
