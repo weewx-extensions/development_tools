@@ -90,9 +90,12 @@ jobs:
         fi
         echo "RMB02:"
 
-        #sudo apt-get update
+        sudo apt-get update
+        echo "RMB03:"
 
-        #if [ "${{inputs.package-list}}" != "" ]; then sudo apt-get -qq --assume-yes install ${{inputs.package-list}}; fi
+
+        if [ "${{inputs.package-list}}" != "" ]; then sudo apt-get -qq --assume-yes install ${{inputs.package-list}}; fi
+        echo "RMB04:"
 
     - name: Lint with flake8
       if: ${{inputs.lint}}
