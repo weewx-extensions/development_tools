@@ -55,6 +55,10 @@ on:
       SONAR_TOKEN:
         required: true
 
+env:
+  latest-python-version: 3.13
+  latest-weewx-version: 5.1.0
+
 jobs:
   build:
 

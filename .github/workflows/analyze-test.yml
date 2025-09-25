@@ -7,10 +7,6 @@ on:
         required: true
         type: string
         description: 'The module to process.'
-
-      foo:
-        required: true
-        type: string 
       python-version:
         required: true
         type: string
@@ -27,7 +23,6 @@ on:
         required: true
         type: string
         description: ''
-
       pip-list:
         required: false
         type: string
