@@ -68,14 +68,23 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
         weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
 
-    uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@master
+    uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
     with:
-      module-name: 'simpleclass'
-      pip-list: 'paho-mqtt'
-      package-list: 'mosquitto'
-      coveralls-upload: false
-      codecov-upload: false
-      sonar-scan: false
+      module-name: ${{inputs.module-name}}
+      python-version: ${{matrix.python-version}}
+      weewx-version: ${{matrix.weewx-version}}
+      latest-python-version: env.latest-python-version
+      latest-weewx-version: env.latest-weewx.version
+      pip-list: ${{inputs.pip-list}}
+      package-list: ${{inputs.package-list}}
+      lint: ${{inputs.lint}}
+      unit-test: ${{inputs.unit-test}}
+      function-test: ${{inputs.function-test}}
+      integration-test: ${{inputs.integration-test}}
+      code-coverage: ${{inputs.code-coverage}}
+      coveralls-upload: ${{inputs.coveralls-upload}}
+      codecov-upload: ${{inputs.codecov-upload}}
+      sonar-scan: ${{inputs.sonar-scan}}
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
