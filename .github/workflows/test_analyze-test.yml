@@ -8,9 +8,15 @@ on:
 
 jobs:
   analyze-test:
-    uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@master
+    #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@development
+    uses: ./.github/workflows/analyze-test.yml
     with:
       module-name: 'simpleclass'
+      pip-list: 'paho-mqtt'
+      package-list: 'mosquitto'
+      coveralls-upload: false
+      codecov-upload: false
+      sonar-scan: false
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
