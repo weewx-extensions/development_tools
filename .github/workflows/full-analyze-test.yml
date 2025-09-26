@@ -60,7 +60,7 @@ env:
   latest-weewx-version: 5.1.0
 
 jobs:
-  build:
+  run:
 
     strategy:
       fail-fast: false
