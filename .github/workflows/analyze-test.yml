@@ -7,6 +7,22 @@ on:
         required: true
         type: string
         description: 'The module to process.'
+      python-version:
+        required: true
+        type: string
+        description: ''
+      weewx-version:
+        required: true
+        type: string
+        description: ''
+      latest-python-version:
+        required: true
+        type: string
+        description: ''
+      latest-weewx-version:
+        required: true
+        type: string
+        description: ''
       pip-list:
         required: false
         type: string
@@ -55,36 +71,27 @@ on:
       SONAR_TOKEN:
         required: true
 
-env:
-  LATEST_PYTHON_VERSION: 3.13
-  LATEST_WEEWX_VERSION: 5.1.0
-
 jobs:
   build:
-
+    name: ${{ inputs.python-version }} ${{ inputs.weewx-version }}
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
-        weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@v3
       with:
-        python-version: ${{ matrix.python-version }}
+        python-version: ${{ inputs.python-version }}
     
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
-        WEEWX_VERSION=${{matrix.weewx-version}}
+        WEEWX_VERSION=${{inputs.weewx-version}}
         if [ ${WEEWX_VERSION:0:6} == 'branch' ]; then
           pip install git+https://github.com/weewx/weewx.git@${WEEWX_VERSION:7}
         else
-          python -m pip install weewx==${{ matrix.weewx-version }}
+          python -m pip install weewx==${{ inputs.weewx-version }}
         fi
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
@@ -125,8 +132,8 @@ jobs:
 
     - name: Code Coverage
     # Only run code coverage once, against the latest python version and weewx version
-      if: ${{ matrix.python-version == env.LATEST_PYTHON_VERSION && 
-              matrix.weewx-version == env.LATEST_WEEWX_VERSION}}
+      if: ${{ inputs.python-version == inputs.latest-python-version && 
+              inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
         export PYTHONPATH=bin:$PYTHONPATH
         coverage run --branch -m pytest bin/user/tests/unit
@@ -138,13 +145,13 @@ jobs:
     - name: Archive test-results
       uses: actions/upload-artifact@v4
       with:
-        name: test-${{ matrix.python-version }}-${{ matrix.weewx-version }}
+        name: test-${{ inputs.python-version }}-${{ inputs.weewx-version }}
         path: results
 
     - name: Upload coverage to Coveralls 
       if: ${{ inputs.coveralls-upload &&
-              matrix.python-version == env.LATEST_PYTHON_VERSION && 
-              matrix.weewx-version == env.LATEST_WEEWX_VERSION}}
+              inputs.python-version == inputs.latest-python-version && 
+              inputs.weewx-version == inputs.latest-weewx-version}}
       uses: coverallsapp/github-action@v2
       with:
         format: cobertura
@@ -152,16 +159,16 @@ jobs:
 
     - name: Upload coverage to Codecov
       if: ${{ inputs.codecov-upload &&
-              matrix.python-version == env.LATEST_PYTHON_VERSION && 
-              matrix.weewx-version == env.LATEST_WEEWX_VERSION}}
+              inputs.python-version == inputs.latest-python-version && 
+              inputs.weewx-version == inputs.latest-weewx-version}}
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
 
     - name: SonarQube Scan
       if: ${{ inputs.sonar-scan && 
-              matrix.python-version == env.LATEST_PYTHON_VERSION && 
-              matrix.weewx-version == env.LATEST_WEEWX_VERSION}}
+              inputs.python-version == inputs.latest-python-version && 
+              inputs.weewx-version == inputs.latest-weewx-version}}
       uses: SonarSource/sonarqube-scan-action@v5
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
