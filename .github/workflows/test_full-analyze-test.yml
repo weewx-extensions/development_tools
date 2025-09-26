@@ -2,7 +2,7 @@ name: Test the full analyze and test workflow
 
 on:
   push:
-    #branches: [ "master" ]
+    #branches: [ "master" ] 
 
 jobs:
   analyze-test:
