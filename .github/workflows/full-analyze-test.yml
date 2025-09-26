@@ -77,7 +77,7 @@ jobs:
       latest-python-version: env.latest-python-version
       latest-weewx-version: env.latest-weewx.version
       pip-list: ${{inputs.pip-list}}
-      package-loist: ${{inputs.package-list}}
+      package-list: ${{inputs.package-list}}
       lint: ${{inputs.lint}}
       unit-test: ${{inputs.unit-test}}
       function-test: ${{inputs.function-test}}
