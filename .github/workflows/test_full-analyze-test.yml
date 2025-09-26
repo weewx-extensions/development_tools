@@ -6,15 +6,18 @@ on:
 
 jobs:
   analyze-test:
-    #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@development
-    uses: ./.github/workflows/full-analyze-test.yml
-    with:
-      module-name: 'simpleclass'
-      pip-list: 'paho-mqtt'
-      package-list: 'mosquitto'
-      coveralls-upload: false
-      codecov-upload: false
-      sonar-scan: false
-    secrets:
-      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Test
+        #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@development
+        uses: ./.github/workflows/full-analyze-test.yml
+        with:
+          module-name: 'simpleclass'
+          pip-list: 'paho-mqtt'
+          package-list: 'mosquitto'
+          coveralls-upload: false
+          codecov-upload: false
+          sonar-scan: false
+          #CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
