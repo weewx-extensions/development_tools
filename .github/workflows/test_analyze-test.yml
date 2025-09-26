@@ -6,7 +6,6 @@ on:
 
 jobs:
   analyze-test:
-    #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@development
     uses: ./.github/workflows/analyze-test.yml
     with:
       module-name: 'simpleclass'
