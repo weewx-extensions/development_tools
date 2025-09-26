@@ -73,6 +73,7 @@ on:
 
 jobs:
   build:
+    name: ${{ inputs.python-version }} ${{ inputs.weewx-version }}
     runs-on: ubuntu-latest
 
     steps:
