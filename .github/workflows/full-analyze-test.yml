@@ -49,13 +49,11 @@ on:
         required: false
         type: boolean
         default: true
-    #secrets:
+    secrets:
       CODECOV_TOKEN:
-        default: 'true'
-        type: string
+        required: true
       SONAR_TOKEN:
-        default: 'true'
-        type: string
+        required: true
 
 env:
   latest-python-version: 3.13
@@ -89,5 +87,5 @@ jobs:
       codecov-upload: ${{inputs.codecov-upload}}
       sonar-scan: ${{inputs.sonar-scan}}
     secrets:
-      CODECOV_TOKEN: ${{ inputs.CODECOV_TOKEN }}
-      SONAR_TOKEN: ${{ inputs.SONAR_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
