@@ -67,8 +67,8 @@ on:
         default: true
       local:
         required: false
-        type: boolean
-        default: false
+        type: string
+        default: 'false'
     secrets:
       COVERALLS_REPO_TOKEN:
         required: true
