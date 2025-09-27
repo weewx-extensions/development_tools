@@ -171,7 +171,7 @@ jobs:
         local_build=${{ inputs.local }}
         if [ "${{inputs.local}}" == "true" ]; then 
           export COVERALLS_SERVICE_NUMBER=$(date +%s);
-          export CI_BRANCH=local2b;
+          export CI_BRANCH=local;
         fi
         coveralls
       env:
