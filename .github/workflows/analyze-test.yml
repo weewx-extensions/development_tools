@@ -156,7 +156,7 @@ jobs:
         coverage html --include bin/user/${{inputs.module-name}}.py -d results/coverage
         # Create an xml coverage report, used by: coveralls, codecov, sonar
         coverage xml --include bin/user/${{inputs.module-name}}.py
-    
+  
     - name: Archive test-results
       uses: actions/upload-artifact@v4
       with:
@@ -164,13 +164,14 @@ jobs:
         path: results
 
     - name: Upload coverage to Coveralls 
-      if: ${{ inputs.coveralls-upload &&
-              inputs.python-version == inputs.latest-python-version && 
-              inputs.weewx-version == inputs.latest-weewx-version}}
-      uses: coverallsapp/github-action@v2
-      with:
-        format: cobertura
-        file: coverage.xml
+      #if: ${{ inputs.coveralls-upload &&
+      #        inputs.python-version == inputs.latest-python-version && 
+      #        inputs.weewx-version == inputs.latest-weewx-version}}
+      run: |
+        export COVERALLS_SERVICE_NUMBER=$(date +%s)
+        export CI_BRANCH=local2b
+        echo "RMB0 $COVERALLS_SERVICE_NUMBER"
+        coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
 
