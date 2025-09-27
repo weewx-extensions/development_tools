@@ -164,9 +164,9 @@ jobs:
         path: results
 
     - name: Upload coverage to Coveralls 
-      #if: ${{ inputs.coveralls-upload &&
-      #        inputs.python-version == inputs.latest-python-version && 
-      #        inputs.weewx-version == inputs.latest-weewx-version}}
+      if: ${{ inputs.coveralls-upload &&
+              inputs.python-version == inputs.latest-python-version && 
+              inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
         local_build=${{ inputs.local }}
         if [ "${{inputs.local}}" == "true" ]; then 
