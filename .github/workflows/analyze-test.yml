@@ -168,9 +168,11 @@ jobs:
       #        inputs.python-version == inputs.latest-python-version && 
       #        inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
-        export COVERALLS_SERVICE_NUMBER=$(date +%s)
-        export CI_BRANCH=local2b
-        echo "RMB0 $COVERALLS_SERVICE_NUMBER"
+        local_build=${{ inputs.local }}
+        if [ "${{inputs.local}}" == "true" ]; then 
+          export COVERALLS_SERVICE_NUMBER=$(date +%s);
+          export CI_BRANCH=local2b;
+        fi
         coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
