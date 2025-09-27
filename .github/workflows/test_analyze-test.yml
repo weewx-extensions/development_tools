@@ -16,9 +16,11 @@ jobs:
       latest-weewx-version: '5.1.0'
       pip-list: 'paho-mqtt'
       package-list: 'mosquitto'
-      coveralls-upload: false
+      coveralls-upload: true
       codecov-upload: false
       sonar-scan: false
+      local: ${{vars.local}}
     secrets:
       CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS.REPO_TOKEN }}
