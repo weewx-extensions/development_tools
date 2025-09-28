@@ -89,15 +89,6 @@ jobs:
       with:
         python-version: ${{ inputs.python-version }}
 
-    - name: Set variables for local run
-      if: ${{inputs.local}}
-      run: |
-        echo "RMB01 ${{inputs.local}}"
-        #export COVERALLS_REPO_TOKEN=${{secrets.COVERALLS_REPO_TOKEN}}
-        COVERALLS_GIT_BRANCH=local
-        echo "RMB01 $COVERALLS_REPO_TOKEN"
-
-
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
