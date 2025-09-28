@@ -168,7 +168,6 @@ jobs:
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
-        local_build=${{ inputs.local }}
         if [ "${{inputs.local}}" == "true" ]; then 
           export COVERALLS_SERVICE_NUMBER=$(date +%s);
           export CI_BRANCH=local;
@@ -184,6 +183,7 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
+        name:
 
     - name: SonarQube Scan
       if: ${{ inputs.sonar-scan && 
