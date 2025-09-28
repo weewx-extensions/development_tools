@@ -76,6 +76,8 @@ on:
         required: true
       SONAR_TOKEN:
         required: true
+      GITHUB_TOKEN:
+        required: true
 
 jobs:
   build:
@@ -162,6 +164,7 @@ jobs:
         if [ "${{inputs.local}}" == "true" ]; then 
           export COVERALLS_SERVICE_NUMBER=$(date +%s);
           export CI_BRANCH=local;
+          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN}}
         fi
         coveralls
       env:

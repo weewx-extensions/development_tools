@@ -12,7 +12,7 @@ jobs:
       module-name: 'simpleclass'
       #pip-list: 'paho-mqtt'
       #package-list: 'mosquitto'
-      coveralls-upload: false
+      coveralls-upload: true
       codecov-upload: true
       sonar-scan: true
     secrets:
