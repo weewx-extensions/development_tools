@@ -57,10 +57,6 @@ on:
       SONAR_TOKEN:
         required: true
 
-env:
-  latest-python-version: 3.13
-  latest-weewx-version: 5.1.0
-
 jobs:
   run:
 
@@ -76,8 +72,8 @@ jobs:
       module-name: ${{inputs.module-name}}
       python-version: ${{matrix.python-version}}
       weewx-version: ${{matrix.weewx-version}}
-      latest-python-version: env.latest-python-version
-      latest-weewx-version: env.latest-weewx.version
+      latest-python-version: '3.13'
+      latest-weewx-version: '5.1.0'
       pip-list: ${{inputs.pip-list}}
       package-list: ${{inputs.package-list}}
       lint: ${{inputs.lint}}
