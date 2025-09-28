@@ -183,7 +183,8 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        name:
+        override_branch: ${{ inputs.local == 'true' && 'local' || '' }}
+        override_commit: ${{ inputs.local == 'true' && 'local' || '' }}
 
     - name: SonarQube Scan
       if: ${{ inputs.sonar-scan && 
