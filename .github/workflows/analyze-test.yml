@@ -160,15 +160,19 @@ jobs:
       if: ${{ inputs.coveralls-upload &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
-      run: |
-        if [ "${{inputs.local}}" == "true" ]; then 
-          export COVERALLS_SERVICE_NUMBER=$(date +%s);
-          export CI_BRANCH=local;
-          export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN}}
-        fi
-        coveralls
+      uses: coverallsapp/github-action@v2
+      #with:
+      #  github-token: ${{secrets.GITHUB_TOKEN}}
+      #run: |
+      #   if [ "${{inputs.local}}" == "true" ]; then 
+      #    export COVERALLS_SERVICE_NUMBER=$(date +%s);
+      #    export CI_BRANCH=local;
+      #    export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+      #  fi
+      #  coveralls
       env:
         COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Upload coverage to Codecov
       if: ${{ inputs.codecov-upload &&
