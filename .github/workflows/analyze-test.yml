@@ -70,8 +70,6 @@ on:
         type: string
         default: 'false'
     secrets:
-      COVERALLS_REPO_TOKEN:
-        required: true
       CODECOV_TOKEN:
         required: true
       SONAR_TOKEN:
@@ -160,6 +158,9 @@ jobs:
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       uses: coverallsapp/github-action@v2
+      with:
+        format: cobertura
+        file: coverage.xml
 
     - name: Upload coverage to Codecov
       if: ${{ inputs.codecov-upload &&
