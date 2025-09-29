@@ -3,6 +3,8 @@ name: Test the full analyze and test workflow
 on:
   push:
     branches: [ "master" ]
+  release:
+    types: [published]
   workflow_dispatch:
 
 jobs:
