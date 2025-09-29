@@ -63,10 +63,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
-        #weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
-        python-version: ["3.13"]
-        weewx-version: ["5.1.0"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
+        weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
+        #python-version: ["3.13"]
+        #weewx-version: ["5.1.0"]
 
     #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
     uses: ./.github/workflows/analyze-test.yml
