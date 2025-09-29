@@ -14,8 +14,8 @@ jobs:
       weewx-version: '5.1.0'
       latest-python-version: '3.13'
       latest-weewx-version: '5.1.0'
-      pip-list: 'paho-mqtt'
-      package-list: 'mosquitto'
+      #pip-list: 'paho-mqtt'
+      #package-list: 'mosquitto'
       coveralls-upload: true
       codecov-upload: true
       sonar-scan: true

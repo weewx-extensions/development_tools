@@ -6,11 +6,11 @@ on:
       coveralls-upload:
         required: false
         type: boolean
-        default: true
+        default: false
       codecov-upload:
         required: false
         type: boolean
-        default: false
+        default: true
       sonar-scan:
         required: false
         type: boolean
