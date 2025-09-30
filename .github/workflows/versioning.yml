@@ -20,8 +20,8 @@ on:
 jobs:
   actions-tagger:
     runs-on: windows-latest
-    #permissions: # (2)
-    #  contents: write
+    permissions:
+      contents: write
     steps:
       - uses: Actions-R-Us/actions-tagger@v2
         with:
