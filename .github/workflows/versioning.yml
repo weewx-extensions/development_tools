@@ -6,7 +6,7 @@ env:
 on:
   release:
     types:
-      - published
+      #- published
       - released
       - edited
   #push: # (1)
