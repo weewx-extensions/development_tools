@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/analyze-test.yml
     with:
       module-name: 'simpleclass'
-      python-version: '3.13'
+      python-version: '3.9.12'
       weewx-version: '5.1.0'
       latest-python-version: '3.13'
       latest-weewx-version: '5.1.0'
