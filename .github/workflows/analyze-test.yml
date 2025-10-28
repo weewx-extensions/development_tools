@@ -7,6 +7,10 @@ on:
         required: true
         type: string
         description: 'The module to process.'
+      os-version:
+        type: string
+        default: 'ubuntu-latest'
+        description: ''
       python-version:
         required: true
         type: string
@@ -78,7 +82,7 @@ on:
 jobs:
   build:
     name: ${{ inputs.python-version }} ${{ inputs.weewx-version }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.os-version}}
 
     steps:
     - uses: actions/checkout@v4

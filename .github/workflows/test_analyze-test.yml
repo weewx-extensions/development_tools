@@ -2,8 +2,8 @@ name: Test the analyze and test workflow
 
 on:
   push:
-    branches: [ "master" ]
-    #branches-ignore: [ "master" ]
+    #branches: [ "master" ]
+    branches-ignore: [ "master" ]
   workflow_dispatch:
 
 jobs:
