@@ -81,7 +81,7 @@ on:
 
 jobs:
   build:
-    name: ${{ inputs.python-version }} ${{ inputs.weewx-version }}
+    name: ${{ inputs.os-version}} ${{ inputs.python-version }} ${{ inputs.weewx-version }}
     runs-on: ${{ inputs.os-version}}
 
     steps:
