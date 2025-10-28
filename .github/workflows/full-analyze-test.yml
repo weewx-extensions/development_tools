@@ -61,7 +61,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os-version: ["ubuntu-latest"]
+        os-version: ["ubuntu-22.04", "ubuntu-20.04"]
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
         python-version: ["3.9.13", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
@@ -73,6 +73,7 @@ jobs:
     uses: ./.github/workflows/analyze-test.yml
     with:
       module-name: ${{inputs.module-name}}
+      os-version: ${{matrix.os-version}}
       python-version: ${{matrix.python-version}}
       weewx-version: ${{matrix.weewx-version}}
       latest-python-version: '3.13'
