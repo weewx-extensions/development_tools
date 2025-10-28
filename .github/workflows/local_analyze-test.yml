@@ -23,7 +23,7 @@ jobs:
       module-name: 'simpleclass'
       python-version: '3.9.12'
       weewx-version: '5.1.0'
-      latest-os-version: 'ubuntu-22.04'
+      latest-os-version: 'ubuntu-24.04'
       latest-python-version: '3.13'
       latest-weewx-version: '5.1.0'
       #pip-list: 'paho-mqtt'
