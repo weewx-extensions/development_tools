@@ -61,12 +61,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os-version: ["ubuntu-latest"]
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
         python-version: ["3.9.13", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
-        weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
+        #weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
         #python-version: ["3.13"]
-        #weewx-version: ["5.1.0"]
+        weewx-version: ["5.1.0"]
 
     #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
     uses: ./.github/workflows/analyze-test.yml
