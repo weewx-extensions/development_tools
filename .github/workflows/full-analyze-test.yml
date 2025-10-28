@@ -68,6 +68,10 @@ jobs:
         #weewx-version: ["5.0.0", "5.2.0", "branch-master", "branch-development"]
         #python-version: ["3.13"]
         weewx-version: ["5.2.0"]
+        include:
+          - weewx-version: branch-master
+            os-version: ubuntu-24-04
+            python-version: 3.13
 
     #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
     uses: ./.github/workflows/analyze-test.yml
