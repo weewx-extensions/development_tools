@@ -76,6 +76,7 @@ jobs:
       os-version: ${{matrix.os-version}}
       python-version: ${{matrix.python-version}}
       weewx-version: ${{matrix.weewx-version}}
+      latest-os-version: 'ubuntu-22.04'
       latest-python-version: '3.13'
       latest-weewx-version: '5.1.0'
       pip-list: ${{inputs.pip-list}}

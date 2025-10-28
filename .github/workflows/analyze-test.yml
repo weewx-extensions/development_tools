@@ -19,6 +19,10 @@ on:
         required: true
         type: string
         description: ''
+      latest-os-version:
+        required: true
+        type: string
+        description: ''
       latest-python-version:
         required: true
         type: string
@@ -144,7 +148,8 @@ jobs:
 
     - name: Code Coverage
     # Only run code coverage once, against the latest python version and weewx version
-      if: ${{ inputs.python-version == inputs.latest-python-version && 
+      if: ${{ inputs.os-version == inputs.latest-os-version &&
+              inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
         export PYTHONPATH=bin:$PYTHONPATH
@@ -163,6 +168,7 @@ jobs:
     - name: Upload coverage to Coveralls 
     # Do not attempt to upload on local runs, could not get it to work
       if: ${{ inputs.local != 'true' && inputs.coveralls-upload &&
+              inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       uses: coverallsapp/github-action@v2
@@ -172,6 +178,7 @@ jobs:
 
     - name: Upload coverage to Codecov
       if: ${{ inputs.codecov-upload &&
+              inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       uses: codecov/codecov-action@v5
@@ -183,6 +190,7 @@ jobs:
     - name: SonarQube Scan
       # Do not attempt to upload on local runs, sonar (free) does not support branch analysis
       if: ${{ inputs.local != 'true' && inputs.sonar-scan && 
+              inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       uses: SonarSource/sonarqube-scan-action@v5

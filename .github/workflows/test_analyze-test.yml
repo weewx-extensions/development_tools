@@ -14,6 +14,7 @@ jobs:
       os-version: 'ubuntu-22.04'
       python-version: '3.13'
       weewx-version: '5.1.0'
+      latest-os-version: 'ubuntu-22.04'
       latest-python-version: '3.13'
       latest-weewx-version: '5.1.0'
       #pip-list: 'paho-mqtt'
