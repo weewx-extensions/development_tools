@@ -1,0 +1,101 @@
+name: Single Test the analyze and test workflow
+
+on:
+  workflow_call:
+    inputs:
+      module-name:
+        required: true
+        type: string
+        description: 'The module to process.'
+      pip-list:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional pip packages to be installed.'
+      package-list:
+        required: false
+        type: string
+        default: ''
+        description: 'Additional OS packages to be installed.'
+      lint:
+        required: false
+        type: boolean
+        default: true
+      unit-test:
+        required: false
+        type: boolean
+        default: true
+      function-test:
+        required: false
+        type: boolean
+        default: true
+      integration-test:
+        required: false
+        type: boolean
+        default: true
+      code-coverage:
+        required: false
+        type: boolean
+        default: true
+      coveralls-upload:
+        required: false
+        type: boolean
+        default: true
+      codecov-upload:
+        required: false
+        type: boolean
+        default: true
+      sonar-scan:
+        required: false
+        type: boolean
+        default: true
+      # These are not expected to be passed in
+      # They are here so that I can define the values once
+      latest-os-version:
+        required: false
+        type: string
+        default: 'ubuntu-24.04'
+      latest-python-version:
+        required: false
+        type: string
+        default: '3.13'
+      latest-weewx-version:
+        required: false
+        type: string
+        default: '5.2.0'
+      oldest-weewx-version:
+        required: false
+        type: string
+        default: '5.0.0'
+    secrets:
+      CODECOV_TOKEN:
+        required: true
+      SONAR_TOKEN:
+        required: true
+
+jobs:
+    run:
+
+        #uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v2
+        uses: ./.github/workflows/perform-analyze-test.yml
+        with:
+            module-name: ${{inputs.module-name}}
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
+            weewx-version: ${{inputs.latest-weewx-version}}
+            latest-os-version: ${{inputs.latest-os-version}}
+            latest-python-version: ${{inputs.latest-python-version}}
+            latest-weewx-version: ${{inputs.latest-weewx-version}}
+            pip-list: ${{inputs.pip-list}}
+            package-list: ${{inputs.package-list}}
+            lint: ${{inputs.lint}}
+            unit-test: ${{inputs.unit-test}}
+            function-test: ${{inputs.function-test}}
+            integration-test: ${{inputs.integration-test}}
+            code-coverage: ${{inputs.code-coverage}}
+            coveralls-upload: ${{inputs.coveralls-upload}}
+            codecov-upload: ${{inputs.codecov-upload}}
+            sonar-scan: ${{inputs.sonar-scan}}
+        secrets:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
