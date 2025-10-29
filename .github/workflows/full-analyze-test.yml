@@ -63,7 +63,7 @@ on:
         required: false
         type: string
         default: '5.2.0'
-      min-weewx-version:
+      oldest-weewx-version:
         required: false
         type: string
         default: '5.0.0'
@@ -85,7 +85,7 @@ jobs:
         python-version: ["3.9.13", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
         weewx-version: ["${{inputs.latest-weewx-version}}"]
         include:
-          - weewx-version: ${{inputs.min-weewx-version}}
+          - weewx-version: ${{inputs.oldest-weewx-version}}
             os-version: ${{inputs.latest-os-version}}
             python-version: ${{inputs.latest-python-version}}
           - weewx-version: branch-master
