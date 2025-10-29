@@ -22,9 +22,10 @@ jobs:
     with:
       module-name: 'simpleclass'
       python-version: '3.9.12'
-      weewx-version: '5.1.0'
+      weewx-version: '5.2.0'
+      latest-os-version: 'ubuntu-24.04'
       latest-python-version: '3.13'
-      latest-weewx-version: '5.1.0'
+      latest-weewx-version: '5.2.0'
       #pip-list: 'paho-mqtt'
       #package-list: 'mosquitto'
       coveralls-upload: ${{ inputs.coveralls-upload }}

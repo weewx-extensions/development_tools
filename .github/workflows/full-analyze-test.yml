@@ -49,6 +49,24 @@ on:
         required: false
         type: boolean
         default: true
+      # These are not expected to be passed in
+      # They are here so that I can define the values once
+      latest-os-version:
+        required: false
+        type: string
+        default: 'ubuntu-24.04'
+      latest-python-version:
+        required: false
+        type: string
+        default: '3.13'
+      latest-weewx-version:
+        required: false
+        type: string
+        default: '5.2.0'
+      oldest-weewx-version:
+        required: false
+        type: string
+        default: '5.0.0'
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -61,21 +79,32 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os-version: ["ubuntu-24.04", "ubuntu-22.04"]
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
         python-version: ["3.9.13", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
-        weewx-version: ["5.0.0", "5.1.0", "branch-master", "branch-development"]
-        #python-version: ["3.13"]
-        #weewx-version: ["5.1.0"]
+        weewx-version: ["${{inputs.latest-weewx-version}}"]
+        include:
+          - weewx-version: ${{inputs.oldest-weewx-version}}
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
+          - weewx-version: branch-master
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
+          - weewx-version: branch-development 
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
 
     #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
     uses: ./.github/workflows/analyze-test.yml
     with:
       module-name: ${{inputs.module-name}}
+      os-version: ${{matrix.os-version}}
       python-version: ${{matrix.python-version}}
       weewx-version: ${{matrix.weewx-version}}
-      latest-python-version: '3.13'
-      latest-weewx-version: '5.1.0'
+      latest-os-version: ${{inputs.latest-os-version}}
+      latest-python-version: ${{inputs.latest-python-version}}
+      latest-weewx-version: ${{inputs.latest-weewx-version}}
       pip-list: ${{inputs.pip-list}}
       package-list: ${{inputs.package-list}}
       lint: ${{inputs.lint}}
