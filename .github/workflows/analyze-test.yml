@@ -40,15 +40,15 @@ on:
       coveralls-upload:
         required: false
         type: boolean
-        default: true
+        default: false
       codecov-upload:
         required: false
         type: boolean
-        default: true
+        default: false
       sonar-scan:
         required: false
         type: boolean
-        default: true
+        default: false
       # These are not expected to be passed in
       # They are here so that I can define the values once
       latest-os-version:
