@@ -1,4 +1,4 @@
-name: Analyze and test the code
+name: Single Test the analyze and test workflow
 
 on:
   workflow_call:
@@ -7,30 +7,6 @@ on:
         required: true
         type: string
         description: 'The module to process.'
-      os-version:
-        required: true
-        type: string
-        description: ''
-      python-version:
-        required: true
-        type: string
-        description: ''
-      weewx-version:
-        required: true
-        type: string
-        description: ''
-      latest-os-version:
-        required: true
-        type: string
-        description: ''
-      latest-python-version:
-        required: true
-        type: string
-        description: ''
-      latest-weewx-version:
-        required: true
-        type: string
-        description: ''
       pip-list:
         required: false
         type: string
@@ -64,19 +40,33 @@ on:
       coveralls-upload:
         required: false
         type: boolean
-        default: true
+        default: false
       codecov-upload:
         required: false
         type: boolean
-        default: true
+        default: false
       sonar-scan:
         required: false
         type: boolean
-        default: true
-      local:
+        default: false
+      # These are not expected to be passed in
+      # They are here so that I can define the values once
+      latest-os-version:
         required: false
         type: string
-        default: 'false'
+        default: 'ubuntu-24.04'
+      latest-python-version:
+        required: false
+        type: string
+        default: '3.13'
+      latest-weewx-version:
+        required: false
+        type: string
+        default: '5.2.0'
+      oldest-weewx-version:
+        required: false
+        type: string
+        default: '5.0.0'
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -84,115 +74,28 @@ on:
         required: true
 
 jobs:
-  build:
-    name: ${{ inputs.os-version}} ${{ inputs.python-version }} ${{ inputs.weewx-version }}
-    runs-on: ${{ inputs.os-version}}
+    run:
 
-    steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ inputs.python-version }}
-      uses: actions/setup-python@v3
-      with:
-        python-version: ${{ inputs.python-version }}
-
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
-
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-
-        if [ "${{inputs.pip-list}}" != "" ]; then 
-          python -m pip install ${{inputs.pip-list}}; 
-        fi
-
-        sudo apt-get update
-
-        if [ "${{inputs.package-list}}" != "" ]; then sudo apt-get -qq --assume-yes install ${{inputs.package-list}}; fi
-
-    - name: Install WeeWX (${{ inputs.weewx-version }})
-      run: |
-        WEEWX_VERSION=${{inputs.weewx-version}}
-        if [ ${WEEWX_VERSION:0:6} == 'branch' ]; then
-          pip install git+https://github.com/weewx/weewx.git@${WEEWX_VERSION:7}
-        else
-          python -m pip install weewx==${{ inputs.weewx-version }}
-        fi
-  
-    - name: Lint with flake8
-      if: ${{inputs.lint}}
-      run: |
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 --tee --output-file=results/flake8.txt bin/user --exclude tests --count --select=E9,F63,F7,F82 --show-source --statistics
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 --tee --output-file=results/flake8.txt bin/user --exclude tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    
-    - name: Unit tests
-      if: ${{inputs.unit-test}}
-      run: |
-        export PYTHONPATH=bin:$PYTHONPATH
-        pytest bin/user/tests/unit --html=results/unittests.html --self-contained-html
-    
-    - name: Function tests
-      if: ${{inputs.function-test}}
-      run: |
-        export PYTHONPATH=bin:$PYTHONPATH
-        pytest bin/user/tests/func --html=results/functests.html --self-contained-html
-
-    - name: Integration tests
-      if: ${{inputs.integration-test}}
-      run: |
-        export PYTHONPATH=bin:$PYTHONPATH
-        pytest bin/user/tests/integ --html=results/integtests.html --self-contained-html
-
-
-    - name: Code Coverage
-    # Only run code coverage once, against the latest python version and weewx version
-      if: ${{ inputs.os-version == inputs.latest-os-version &&
-              inputs.python-version == inputs.latest-python-version && 
-              inputs.weewx-version == inputs.latest-weewx-version}}
-      run: |
-        export PYTHONPATH=bin:$PYTHONPATH
-        coverage run --branch -m pytest bin/user/tests/unit
-        # Create a human readable coverage report
-        coverage html --include bin/user/${{inputs.module-name}}.py -d results/coverage
-        # Create an xml coverage report, used by: coveralls, codecov, sonar
-        coverage xml --include bin/user/${{inputs.module-name}}.py
-  
-    - name: Archive test-results
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-${{ inputs.os-version }}-${{ inputs.python-version }}-${{ inputs.weewx-version }}
-        path: results
-
-    - name: Upload coverage to Coveralls 
-    # Do not attempt to upload on local runs, could not get it to work
-      if: ${{ inputs.local != 'true' && inputs.coveralls-upload &&
-              inputs.os-version == inputs.latest-os-version &&
-              inputs.python-version == inputs.latest-python-version && 
-              inputs.weewx-version == inputs.latest-weewx-version}}
-      uses: coverallsapp/github-action@v2
-      with:
-        format: cobertura
-        file: coverage.xml
-
-    - name: Upload coverage to Codecov
-      if: ${{ inputs.codecov-upload &&
-              inputs.os-version == inputs.latest-os-version &&
-              inputs.python-version == inputs.latest-python-version && 
-              inputs.weewx-version == inputs.latest-weewx-version}}
-      uses: codecov/codecov-action@v5
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        override_branch: ${{ inputs.local == 'true' && 'local' || '' }}
-        override_commit: ${{ inputs.local == 'true' && 'local' || '' }}
-
-    - name: SonarQube Scan
-      # Do not attempt to upload on local runs, sonar (free) does not support branch analysis
-      if: ${{ inputs.local != 'true' && inputs.sonar-scan && 
-              inputs.os-version == inputs.latest-os-version &&
-              inputs.python-version == inputs.latest-python-version && 
-              inputs.weewx-version == inputs.latest-weewx-version}}
-      uses: SonarSource/sonarqube-scan-action@v5
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        #uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v2
+        uses: ./.github/workflows/perform-analyze-test.yml
+        with:
+            module-name: ${{inputs.module-name}}
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
+            weewx-version: ${{inputs.latest-weewx-version}}
+            latest-os-version: ${{inputs.latest-os-version}}
+            latest-python-version: ${{inputs.latest-python-version}}
+            latest-weewx-version: ${{inputs.latest-weewx-version}}
+            pip-list: ${{inputs.pip-list}}
+            package-list: ${{inputs.package-list}}
+            lint: ${{inputs.lint}}
+            unit-test: ${{inputs.unit-test}}
+            function-test: ${{inputs.function-test}}
+            integration-test: ${{inputs.integration-test}}
+            code-coverage: ${{inputs.code-coverage}}
+            coveralls-upload: ${{inputs.coveralls-upload}}
+            codecov-upload: ${{inputs.codecov-upload}}
+            sonar-scan: ${{inputs.sonar-scan}}
+        secrets:
+            CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
