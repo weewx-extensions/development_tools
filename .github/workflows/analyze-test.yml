@@ -162,7 +162,7 @@ jobs:
     - name: Archive test-results
       uses: actions/upload-artifact@v4
       with:
-        name: test-${{ inputs.python-version }}-${{ inputs.weewx-version }}
+        name: test-${{ inputs.os-version }}-${{ inputs.python-version }}-${{ inputs.weewx-version }}
         path: results
 
     - name: Upload coverage to Coveralls 
