@@ -63,6 +63,10 @@ on:
         required: false
         type: string
         default: '5.2.0'
+      min-weewx-version:
+        required: false
+        type: string
+        default: '5.0.0'
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -79,10 +83,11 @@ jobs:
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
         python-version: ["3.9.13", "3.10", "3.11", "3.12", "3.13", "3.14.0-rc.2"]
-        #weewx-version: ["5.0.0", "5.2.0", "branch-master", "branch-development"]
-        #python-version: ["3.13"]
         weewx-version: ["${{inputs.latest-weewx-version}}"]
         include:
+          - weewx-version: ${{inputs.min-weewx-version}}
+            os-version: ${{inputs.latest-os-version}}
+            python-version: ${{inputs.latest-python-version}}
           - weewx-version: branch-master
             os-version: ${{inputs.latest-os-version}}
             python-version: ${{inputs.latest-python-version}}
