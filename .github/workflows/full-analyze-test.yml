@@ -49,6 +49,12 @@ on:
         required: false
         type: boolean
         default: true
+      # These are not expected to be passed in
+      # They are here so that I can define the values once
+      latest-os-version:
+        required: false
+        type: string
+        default: 'ubuntu-24.04'
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -70,7 +76,7 @@ jobs:
         weewx-version: ["5.2.0"]
         include:
           - weewx-version: branch-master
-            os-version: ubuntu-24-04
+            os-version: ${{inputs.latest-os-version}}
             python-version: 3.13
 
     #uses: weewx-extensions/development_tools/.github/workflows/analyze-test.yml@v2
@@ -80,7 +86,7 @@ jobs:
       os-version: ${{matrix.os-version}}
       python-version: ${{matrix.python-version}}
       weewx-version: ${{matrix.weewx-version}}
-      latest-os-version: 'ubuntu-24.04'
+      latest-os-version: ${{inputs.latest-os-version}}
       latest-python-version: '3.13'
       latest-weewx-version: '5.2.0'
       pip-list: ${{inputs.pip-list}}
