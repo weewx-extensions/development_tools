@@ -7,7 +7,7 @@ on:
 
 jobs:
   analyze-test:
-    uses: ./.github/workflows/analyze-test.yml
+    uses: ./.github/workflows/perform-analyze-test.yml
     with:
       module-name: 'simpleclass'
       os-version: 'ubuntu-22.04'
