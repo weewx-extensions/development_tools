@@ -111,8 +111,7 @@ jobs:
       latest-weewx-version: ${{inputs.latest-weewx-version}}
       pip-list: ${{inputs.pip-list}}
       package-list: ${{inputs.package-list}}
-            artifact-name-suffix: ${{inputs.artifact-name-suffix}}
-
+      artifact-name-suffix: ${{inputs.artifact-name-suffix}}
       lint: ${{inputs.lint}}
       unit-test: ${{inputs.unit-test}}
       function-test: ${{inputs.function-test}}
