@@ -28,6 +28,7 @@ jobs:
       latest-weewx-version: '5.2.0'
       #pip-list: 'paho-mqtt'
       #package-list: 'mosquitto'
+      artifact-name-suffix: ''
       coveralls-upload: ${{ inputs.coveralls-upload }}
       codecov-upload: ${{ inputs.codecov-upload}}
       sonar-scan: ${{ inputs.sonar-scan }}

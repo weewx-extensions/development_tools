@@ -41,6 +41,10 @@ on:
         type: string
         default: ''
         description: 'Additional OS packages to be installed.'
+      artifact-name-suffix:
+        required: true
+        type: string
+        description: ''
       lint:
         required: false
         type: boolean
@@ -162,7 +166,7 @@ jobs:
     - name: Archive test-results
       uses: actions/upload-artifact@v4
       with:
-        name: test-${{ inputs.os-version }}-${{ inputs.python-version }}-${{ inputs.weewx-version }}
+        name: test-${{ inputs.os-version }}-${{ inputs.python-version }}-${{ inputs.weewx-version }}${{inputs.artifact-name-suffix}}
         path: results
 
     - name: Upload coverage to Coveralls 
