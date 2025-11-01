@@ -29,6 +29,7 @@ jobs:
       #pip-list: 'paho-mqtt'
       #package-list: 'mosquitto'
       artifact-name-suffix: ''
+      flake-extra-parms: ''
       coveralls-upload: ${{ inputs.coveralls-upload }}
       codecov-upload: ${{ inputs.codecov-upload}}
       sonar-scan: ${{ inputs.sonar-scan }}
