@@ -10,10 +10,10 @@ jobs:
       module-name: 'simpleclass'
       os-version: 'ubuntu-24.04'
       # Versions higher than 3.11 require a virtual environment to run
-      python-version: '3.11'
+      python-version: '3.13'
       weewx-version: '5.2.0'
       latest-os-version: 'ubuntu-24.04'
-      latest-python-version: '3.11'
+      latest-python-version: '3.13'
       latest-weewx-version: '5.2.0'
       pip-list: ''
       package-list: ''

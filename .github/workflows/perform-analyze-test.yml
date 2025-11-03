@@ -102,9 +102,14 @@ jobs:
       uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
-
+    - name: Create and activate virtual environment
+      run: |
+        python -m venv .venv
+        source .venv/bin/activate
     - name: Install dependencies
       run: |
+        source .venv/bin/activate
+
         python -m pip install --upgrade pip
         python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
 
@@ -120,6 +125,8 @@ jobs:
 
     - name: Install WeeWX (${{ inputs.weewx-version }})
       run: |
+        source .venv/bin/activate
+
         WEEWX_VERSION=${{inputs.weewx-version}}
         if [ ${WEEWX_VERSION:0:6} == 'branch' ]; then
           pip install git+https://github.com/weewx/weewx.git@${WEEWX_VERSION:7}
@@ -130,6 +137,8 @@ jobs:
     - name: Lint with flake8
       if: ${{inputs.lint}}
       run: |
+        source .venv/bin/activate
+
         # stop the build if there are Python syntax errors or undefined names
         flake8 --tee --output-file=results/flake8.txt bin/user --count --select=E9,F63,F7,F82 --show-source --statistics ${{inputs.flake-extra-parms}}
         # exit-zero treats all errors as warnings.
@@ -138,18 +147,24 @@ jobs:
     - name: Unit tests
       if: ${{inputs.unit-test}}
       run: |
+        source .venv/bin/activate
+
         export PYTHONPATH=bin:$PYTHONPATH
         pytest bin/user/tests/unit --html=results/unittests.html --self-contained-html
     
     - name: Function tests
       if: ${{inputs.function-test}}
       run: |
+        source .venv/bin/activate
+
         export PYTHONPATH=bin:$PYTHONPATH
         pytest bin/user/tests/func --html=results/functests.html --self-contained-html
 
     - name: Integration tests
       if: ${{inputs.integration-test}}
       run: |
+        source .venv/bin/activate
+
         export PYTHONPATH=bin:$PYTHONPATH
         pytest bin/user/tests/integ --html=results/integtests.html --self-contained-html
 
@@ -160,6 +175,8 @@ jobs:
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
       run: |
+        source .venv/bin/activate
+
         export PYTHONPATH=bin:$PYTHONPATH
         coverage run --branch -m pytest bin/user/tests/unit
         # Create a human readable coverage report
