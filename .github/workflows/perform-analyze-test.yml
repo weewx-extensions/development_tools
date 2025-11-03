@@ -73,8 +73,8 @@ on:
         type: boolean
       local:
         required: false
-        type: string
-        default: 'false'
+        type: boolean
+        default: false
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -182,7 +182,7 @@ jobs:
 
     - name: Upload coverage to Coveralls 
     # Do not attempt to upload on local runs, could not get it to work
-      if: ${{ inputs.local != 'true' && inputs.coveralls-upload &&
+      if: ${{ !inputs.local && inputs.coveralls-upload &&
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
@@ -199,12 +199,12 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        override_branch: ${{ inputs.local == 'true' && 'local' || '' }}
-        override_commit: ${{ inputs.local == 'true' && 'local' || '' }}
+        override_branch: ${{ inputs.local && 'local' || '' }}
+        override_commit: ${{ inputs.local && 'local' || '' }}
 
     - name: SonarQube Scan
       # Do not attempt to upload on local runs, sonar (free) does not support branch analysis
-      if: ${{ inputs.local != 'true' && inputs.sonar-scan && 
+      if: ${{ inputs.local && inputs.sonar-scan && 
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
