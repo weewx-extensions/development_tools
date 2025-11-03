@@ -97,9 +97,9 @@ jobs:
     runs-on: ${{ inputs.os-version}}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     - name: Set up Python ${{ inputs.python-version }}
-      uses: actions/setup-python@v3
+      uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
 
@@ -168,7 +168,7 @@ jobs:
         coverage xml --include bin/user/${{inputs.module-name}}.py
   
     - name: Archive test-results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: test-${{ inputs.os-version }}-${{ inputs.python-version }}-${{ inputs.weewx-version }}${{inputs.artifact-name-suffix}}
         path: results
@@ -201,6 +201,6 @@ jobs:
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
-      uses: SonarSource/sonarqube-scan-action@v5
+      uses: SonarSource/sonarqube-scan-action@v6
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

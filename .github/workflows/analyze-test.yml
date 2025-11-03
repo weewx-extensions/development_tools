@@ -85,7 +85,6 @@ jobs:
     run:
 
         uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v3
-        #uses: ./.github/workflows/perform-analyze-test.yml
         with:
             module-name: ${{inputs.module-name}}
             os-version: ${{inputs.latest-os-version}}
