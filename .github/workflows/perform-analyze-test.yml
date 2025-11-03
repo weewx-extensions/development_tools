@@ -32,14 +32,12 @@ on:
         type: string
         description: ''
       pip-list:
-        required: false
+        required: true
         type: string
-        default: ''
         description: 'Additional pip packages to be installed.'
       package-list:
-        required: false
+        required: true
         type: string
-        default: ''
         description: 'Additional OS packages to be installed.'
       artifact-name-suffix:
         required: true
@@ -50,37 +48,29 @@ on:
         type: string
         description: ''
       lint:
-        required: false
+        required: true
         type: boolean
-        default: true
       unit-test:
-        required: false
+        required: true
         type: boolean
-        default: true
       function-test:
-        required: false
+        required: true
         type: boolean
-        default: true
       integration-test:
-        required: false
+        required: true
         type: boolean
-        default: true
       code-coverage:
-        required: false
+        required: true
         type: boolean
-        default: true
       coveralls-upload:
-        required: false
+        required: true
         type: boolean
-        default: true
       codecov-upload:
-        required: false
+        required: true
         type: boolean
-        default: true
       sonar-scan:
-        required: false
+        required: true
         type: boolean
-        default: true
       local:
         required: false
         type: string
