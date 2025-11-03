@@ -1,4 +1,4 @@
-name: Test the full analyze and test workflow
+name: TEST the full analyze and test workflow
 
 on:
   push:
