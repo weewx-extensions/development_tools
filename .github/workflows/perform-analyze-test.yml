@@ -204,7 +204,7 @@ jobs:
 
     - name: SonarQube Scan
       # Do not attempt to upload on local runs, sonar (free) does not support branch analysis
-      if: ${{ inputs.local && inputs.sonar-scan && 
+      if: ${{ !inputs.local && inputs.sonar-scan && 
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
