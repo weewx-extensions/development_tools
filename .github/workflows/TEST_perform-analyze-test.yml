@@ -27,7 +27,7 @@ jobs:
       coveralls-upload: true
       codecov-upload: true
       sonar-scan: true
-    #secrets:
+    secrets:
       #COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-      #CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
