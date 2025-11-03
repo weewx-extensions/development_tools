@@ -2,7 +2,6 @@ name: TEST perform analyze and test
 
 on:
   push:
-    branches-ignore: [ "master" ]
 
 jobs:
   analyze-test:
