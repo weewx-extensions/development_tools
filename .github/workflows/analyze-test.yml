@@ -74,7 +74,11 @@ on:
       flake-extra-parms:
         required: false
         type: string
-        default: ''        
+        default: ''  
+      local:
+        required: false
+        type: boolean
+        default: false      
     secrets:
       CODECOV_TOKEN:
         required: true

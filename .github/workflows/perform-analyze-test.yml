@@ -72,9 +72,8 @@ on:
         required: true
         type: boolean
       local:
-        required: false
+        required: true
         type: boolean
-        default: false
     secrets:
       CODECOV_TOKEN:
         required: true
