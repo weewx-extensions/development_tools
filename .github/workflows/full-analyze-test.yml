@@ -104,7 +104,7 @@ jobs:
             os-version: ${{inputs.latest-os-version}}
             python-version: ${{inputs.latest-python-version}}
       #max-parallel: ${{env.ACT && 1 || 4}}
-      max-parallel: ${{github.event.inputs.maxp}}
+      max-parallel: ${{github.event.env.ACT}}
 
     uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v3
     with:
