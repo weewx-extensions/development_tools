@@ -87,8 +87,25 @@ jobs:
     - name: Log inputs
       run: |
         echo "INPUT: env.ACT: ${{env.ACT}}"
-        echo "INPUT: codecov-upload: ${{inputs.codecov-upload}}"
-        echo "INPUT: sonar-scan:     ${{inputs.sonar-scan}}"
+        echo "INPUT: module-name:           ${{inputs.module-name}}"
+        echo "INPUT: os-version:            ${{inputs.os-version}}"
+        echo "INPUT: python-version:        ${{inputs.python-version}}"
+        echo "INPUT: weewx-version:         ${{inputs.weewx-version}}"
+        echo "INPUT: latest-os-version:     ${{inputs.latest-os-version}}"
+        echo "INPUT: latest-python-version: ${{inputs.latest-python-version}}"
+        echo "INPUT: latest-weewx-version:  ${{inputs.latest-weewx-version}}"
+        echo "INPUT: pip-list:              ${{inputs.pip-list}}"
+        echo "INPUT: package-list:          ${{inputs.package-list}}"
+        echo "INPUT: artifact-name-suffix:  ${{inputs.artifact-name-suffix}}"
+        echo "INPUT: flake-extra-parms:     ${{inputs.flake-extra-parms}}"
+        echo "INPUT: lint:                  ${{inputs.lint}}"
+        echo "INPUT: unit-test:             ${{inputs.unit-test}}"
+        echo "INPUT: function-test:         ${{inputs.function-test}}"
+        echo "INPUT: integration-test:      ${{inputs.integration-test}}"
+        echo "INPUT: code-coverage:         ${{inputs.code-coverage}}"
+        echo "INPUT: coveralls-upload:      ${{inputs.coveralls-upload}}"
+        echo "INPUT: codecov-upload:        ${{inputs.codecov-upload}}"
+        echo "INPUT: sonar-scan:            ${{inputs.sonar-scan}}"
 
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@v6
