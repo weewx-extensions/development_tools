@@ -213,7 +213,7 @@ jobs:
         file: coverage.xml
 
     - name: Upload coverage to Codecov
-      if: ${{ inputs.codecov-upload &&
+      if: ${{ !env.ACT && inputs.codecov-upload &&
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
