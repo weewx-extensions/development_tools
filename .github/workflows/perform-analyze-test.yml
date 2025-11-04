@@ -87,14 +87,21 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
+    - name: Log inputs
+      run: |
+        echo "INPUT: env.ACT: ${{env.ACT}}"
+        echo "INPUT: local: ${{inputs.local}}"
+
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@v6
       with:
         python-version: ${{ inputs.python-version }}
+
     - name: Create and activate virtual environment
       run: |
         python -m venv .venv
         source .venv/bin/activate
+
     - name: Install dependencies
       run: |
         source .venv/bin/activate
