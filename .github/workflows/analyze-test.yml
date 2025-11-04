@@ -74,11 +74,7 @@ on:
       flake-extra-parms:
         required: false
         type: string
-        default: ''  
-      local:
-        required: false
-        type: boolean
-        default: false      
+        default: ''        
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -109,7 +105,6 @@ jobs:
             coveralls-upload: ${{inputs.coveralls-upload}}
             codecov-upload: ${{inputs.codecov-upload}}
             sonar-scan: ${{inputs.sonar-scan}}
-            local: ${{inputs.local}}
         secrets:
             CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

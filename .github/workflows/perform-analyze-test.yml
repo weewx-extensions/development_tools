@@ -71,9 +71,6 @@ on:
       sonar-scan:
         required: true
         type: boolean
-      local:
-        required: true
-        type: boolean
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -90,7 +87,7 @@ jobs:
     - name: Log inputs
       run: |
         echo "INPUT: env.ACT: ${{env.ACT}}"
-        echo "INPUT: local: ${{inputs.local}}"
+        echo "INPUT: sonar-scan: ${{inputs.sonar-scan}}"
 
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@v6
@@ -188,7 +185,7 @@ jobs:
 
     - name: Upload coverage to Coveralls 
     # Do not attempt to upload on local runs, could not get it to work
-      if: ${{ !inputs.local && inputs.coveralls-upload &&
+      if: ${{ !env.ACT && inputs.coveralls-upload &&
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
@@ -205,12 +202,12 @@ jobs:
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
-        override_branch: ${{ inputs.local && 'local' || '' }}
-        override_commit: ${{ inputs.local && 'local' || '' }}
+        override_branch: ${{ env.ACT && 'local' || '' }}
+        override_commit: ${{ env.ACT && 'local' || '' }}
 
     - name: SonarQube Scan
       # Do not attempt to upload on local runs, sonar (free) does not support branch analysis
-      if: ${{ !inputs.local && inputs.sonar-scan && 
+      if: ${{ !env.ACT && inputs.sonar-scan && 
               inputs.os-version == inputs.latest-os-version &&
               inputs.python-version == inputs.latest-python-version && 
               inputs.weewx-version == inputs.latest-weewx-version}}
