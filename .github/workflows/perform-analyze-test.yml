@@ -87,7 +87,8 @@ jobs:
     - name: Log inputs
       run: |
         echo "INPUT: env.ACT: ${{env.ACT}}"
-        echo "INPUT: sonar-scan: ${{inputs.sonar-scan}}"
+        echo "INPUT: codecov-upload: ${{inputs.codecov-upload}}"
+        echo "INPUT: sonar-scan:     ${{inputs.sonar-scan}}"
 
     - name: Set up Python ${{ inputs.python-version }}
       uses: actions/setup-python@v6
