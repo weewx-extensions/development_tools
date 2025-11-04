@@ -102,7 +102,7 @@ jobs:
           - weewx-version: branch-development 
             os-version: ${{inputs.latest-os-version}}
             python-version: ${{inputs.latest-python-version}}
-      max-parallel: ${{github.event.env.ACT && 1 || github.event.strategy.job-total}}
+      max-parallel: ${{github.event.env.ACT && 1 || 256}}
 
     uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v3
     with:
