@@ -87,6 +87,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        maxp: ["${{env.ACT && 1 || 4}}"]
         os-version: ["ubuntu-24.04", "ubuntu-22.04"]
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
@@ -102,7 +103,8 @@ jobs:
           - weewx-version: branch-development 
             os-version: ${{inputs.latest-os-version}}
             python-version: ${{inputs.latest-python-version}}
-      max-parallel: ${{env.ACT && 1 || 4}}
+      #max-parallel: ${{env.ACT && 1 || 4}}
+      max-parallel: ${{github.event.inputs.maxp}}
 
     uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v3
     with:
