@@ -87,6 +87,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # When running locally via act, to limit the os versions tested against use the --matrix option
+        # For example --matrix os-version:ubuntu-24.04
         os-version: ["ubuntu-24.04", "ubuntu-22.04"]
         # Specify the exact minimum supported Python version, ie 3.9.13 and not 3.9
         # Note, 3.9.13 is the oldest version that runs via github actions
