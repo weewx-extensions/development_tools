@@ -23,6 +23,7 @@ jobs:
       unit-test: true
       function-test: true
       integration-test: true
+      e2e-test: true
       code-coverage: true
       coveralls-upload: true
       codecov-upload: true

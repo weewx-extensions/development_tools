@@ -59,6 +59,9 @@ on:
       integration-test:
         required: true
         type: boolean
+      e2e-test:
+        required: true
+        type: boolean
       code-coverage:
         required: true
         type: boolean
@@ -102,6 +105,7 @@ jobs:
         echo "INPUT: unit-test:             ${{inputs.unit-test}}"
         echo "INPUT: function-test:         ${{inputs.function-test}}"
         echo "INPUT: integration-test:      ${{inputs.integration-test}}"
+        echo "INPUT: e2e-test:              ${{inputs.e2e-test}}"
         echo "INPUT: code-coverage:         ${{inputs.code-coverage}}"
         echo "INPUT: coveralls-upload:      ${{inputs.coveralls-upload}}"
         echo "INPUT: codecov-upload:        ${{inputs.codecov-upload}}"
@@ -179,6 +183,13 @@ jobs:
         export PYTHONPATH=bin:$PYTHONPATH
         pytest bin/user/tests/integ --html=results/integtests.html --self-contained-html
 
+    - name: E2E tests
+      if: ${{inputs.e2e-test}}
+      run: |
+        source .venv/bin/activate
+
+        export PYTHONPATH=bin:$PYTHONPATH
+        pytest bin/user/tests/e2e --html=results/e2etests.html --self-contained-html
 
     - name: Code Coverage
     # Only run code coverage once, against the latest python version and weewx version

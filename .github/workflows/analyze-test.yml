@@ -33,6 +33,10 @@ on:
         required: false
         type: boolean
         default: true
+      e2e-test:
+        required: false
+        type: boolean
+        default: true
       code-coverage:
         required: false
         type: boolean
@@ -101,6 +105,7 @@ jobs:
             unit-test: ${{inputs.unit-test}}
             function-test: ${{inputs.function-test}}
             integration-test: ${{inputs.integration-test}}
+            e2e-test: ${{inputs.e2e-test}}
             code-coverage: ${{inputs.code-coverage}}
             coveralls-upload: ${{inputs.coveralls-upload}}
             codecov-upload: ${{inputs.codecov-upload}}
