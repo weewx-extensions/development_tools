@@ -1,27 +1,11 @@
-name: Keep the versions up-to-date
+name: Stale Issues
 
-env:
-  ACTIONS_STEP_DEBUG: true
-  
 on:
-  release:
-    types:
-      - published
-      #- released
-      #- edited
-  #push: # (1)
-  #  tags:
-  #    - 'v?[0-9]+.[0-9]+.[0-9]+'
-  #  branches-ignore:
-  #    - '**'
-  #  paths-ignore:
-  #    - '**'
+  workflow_call:
 
 jobs:
-  actions-tagger:
-    runs-on: windows-latest
-    permissions:
-      contents: write
+  stale:
+    runs-on: ubuntu-latest
     steps:
       - uses: Actions-R-Us/actions-tagger@v2
         with:
