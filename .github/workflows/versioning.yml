@@ -1,4 +1,4 @@
-name: Stale Issues
+name: Keep versions up to date
 
 on:
   workflow_call:
