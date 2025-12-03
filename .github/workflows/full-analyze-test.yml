@@ -106,7 +106,7 @@ jobs:
             python-version: ${{inputs.latest-python-version}}
       #max-parallel: ${{github.event.env.ACT && 1 || 256}}
 
-    uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v3
+    uses: weewx-extensions/development_tools/.github/workflows/perform-analyze-test.yml@v4
     with:
       module-name: ${{inputs.module-name}}
       os-version: ${{matrix.os-version}}
