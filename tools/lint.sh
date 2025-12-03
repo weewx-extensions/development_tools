@@ -1,1 +1,1 @@
-flake8 bin/user
+pylint bin/user/$WEEWX_MODULE_NAME

@@ -18,7 +18,6 @@ jobs:
       pip-list: ''
       package-list: ''
       artifact-name-suffix: ''
-      flake-extra-parms: ''
       lint: true
       unit-test: true
       function-test: true

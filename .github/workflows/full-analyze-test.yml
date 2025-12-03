@@ -75,10 +75,6 @@ on:
         required: false
         type: string
         default: ''
-      flake-extra-parms:
-        required: false
-        type: string
-        default: '' 
     secrets:
       CODECOV_TOKEN:
         required: true
@@ -122,7 +118,6 @@ jobs:
       pip-list: ${{inputs.pip-list}}
       package-list: ${{inputs.package-list}}
       artifact-name-suffix: ${{inputs.artifact-name-suffix}}
-      flake-extra-parms: ${{inputs.flake-extra-parms}}
       lint: ${{inputs.lint}}
       unit-test: ${{inputs.unit-test}}
       function-test: ${{inputs.function-test}}

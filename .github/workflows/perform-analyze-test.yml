@@ -43,10 +43,6 @@ on:
         required: true
         type: string
         description: ''
-      flake-extra-parms:
-        required: true
-        type: string
-        description: ''
       lint:
         required: true
         type: boolean
@@ -100,7 +96,6 @@ jobs:
         echo "INPUT: pip-list:              ${{inputs.pip-list}}"
         echo "INPUT: package-list:          ${{inputs.package-list}}"
         echo "INPUT: artifact-name-suffix:  ${{inputs.artifact-name-suffix}}"
-        echo "INPUT: flake-extra-parms:     ${{inputs.flake-extra-parms}}"
         echo "INPUT: lint:                  ${{inputs.lint}}"
         echo "INPUT: unit-test:             ${{inputs.unit-test}}"
         echo "INPUT: function-test:         ${{inputs.function-test}}"
@@ -126,7 +121,7 @@ jobs:
         source .venv/bin/activate
 
         python -m pip install --upgrade pip
-        python -m pip install coverage coveralls configobj flake8 mock pytest pytest-cov pytest-html
+        python -m pip install coverage coveralls configobj mock pylint pytest pytest-cov pytest-html
 
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
@@ -149,15 +144,13 @@ jobs:
           python -m pip install weewx==${{ inputs.weewx-version }}
         fi
   
-    - name: Lint with flake8
+    - name: Lint with pylint
       if: ${{inputs.lint}}
       run: |
         source .venv/bin/activate
 
-        # stop the build if there are Python syntax errors or undefined names
-        flake8 --tee --output-file=results/flake8.txt bin/user --count --select=E9,F63,F7,F82 --show-source --statistics ${{inputs.flake-extra-parms}}
-        # exit-zero treats all errors as warnings.
-        flake8 --tee --output-file=results/flake8.txt bin/user --count --exit-zero --max-complexity=10 --statistics ${{inputs.flake-extra-parms}}
+        mkdir -p results
+        pylint ./bin/user/${{inputs.module-name}}.py -r n --msg-template="{path}:{line}: [{msg_id}({symbol}), {obj}] {msg}" | tee results/pylint.txt
     
     - name: Unit tests
       if: ${{inputs.unit-test}}
