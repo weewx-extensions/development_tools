@@ -9,4 +9,4 @@ export PYTHONPATH=$WEEWX_PYTHONPATH
 
 coverage run --branch -m pytest bin/user/tests/unit; 
 
-coverage html --include bin/user/$WEEWX_MODULE_NAME.py
+coverage html --include 'bin/user/*.py' --omit bin/user/__init__.py

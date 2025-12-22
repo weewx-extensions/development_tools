@@ -195,9 +195,9 @@ jobs:
         export PYTHONPATH=bin:$PYTHONPATH
         coverage run --branch -m pytest bin/user/tests/unit
         # Create a human readable coverage report
-        coverage html --include bin/user/${{inputs.module-name}}.py -d results/coverage
+        coverage html --include 'bin/user/*.py' --omit bin/user/__init__.py -d results/coverage
         # Create an xml coverage report, used by: coveralls, codecov, sonar
-        coverage xml --include bin/user/${{inputs.module-name}}.py
+        coverage xml --include 'bin/user/*.py' --omit bin/user/__init__.py
   
     - name: Archive test-results
       uses: actions/upload-artifact@v5
